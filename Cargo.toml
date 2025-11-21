@@ -1,0 +1,15 @@
+[package]
+name = "image_tagger"
+version = "1.0.1"
+edition = "2021"
+authors = ["Sanhanat Tagging Tool"]
+description = "Cross-platform image tagging desktop app built with Iced"
+
+[dependencies]
+iced = { version = "0.13.1", features = ["canvas", "image", "tokio", "advanced"] }
+csv = "1.4.0"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+thiserror = "2.0.17"
+anyhow = "1.0.100"
+image = "0.25.9"
