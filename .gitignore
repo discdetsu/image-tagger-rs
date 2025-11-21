@@ -21,3 +21,4 @@ target
 #.idea/
 
 samples/
+.DS_Store

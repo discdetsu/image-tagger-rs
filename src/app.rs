@@ -226,7 +226,7 @@ impl TaggerState {
         let control_section = container(self.control_panel()).width(Length::FillPortion(1));
 
         let main_row = row![image_section, control_section]
-            .spacing(24)
+            .spacing(32) // Increased spacing
             .height(Length::Fill)
             .align_y(Alignment::Start);
 
@@ -240,7 +240,7 @@ impl TaggerState {
             let banner_row_content = row![
                 text(&banner.text)
                     .size(18)
-                    .style(text_color(Color::from_rgb8(0x30, 0x30, 0x30))),
+                    .style(text_color(TEXT_PRIMARY)),
                 button("Dismiss")
                     .padding([6, 14])
                     .on_press(Message::DismissStatus),
@@ -398,7 +398,7 @@ impl TaggerState {
             text("Contrast")
                 .size(14)
                 .style(text_color(TEXT_MUTED)),
-            text(format!("{:.1}x", self.contrast))
+            text(format!("{:.2}x", self.contrast))
                 .size(14)
                 .style(text_color(TEXT_MUTED))
         ]
@@ -439,26 +439,30 @@ impl TaggerState {
 
         let nav_row = row![
             button("Previous")
-                .padding([10, 20])
+                .padding([12, 24])
                 .on_press(Message::Previous)
-                .style(button::secondary),
+                .style(secondary_button_style)
+                .width(Length::Fill),
             button("Next")
-                .padding([10, 20])
+                .padding([12, 24])
                 .on_press(Message::Next)
-                .style(button::secondary),
+                .style(secondary_button_style)
+                .width(Length::Fill),
         ]
         .spacing(12)
         .width(Length::Fill);
 
         let save_row = row![
             button("Save")
-                .padding([10, 20])
+                .padding([12, 24])
                 .on_press(Message::Save)
-                .style(button::primary),
+                .style(primary_button_style)
+                .width(Length::Fill),
             button("Save & Exit")
-                .padding([10, 20])
+                .padding([12, 24])
                 .on_press(Message::SaveAndExit)
-                .style(button::primary),
+                .style(primary_button_style)
+                .width(Length::Fill),
         ]
         .spacing(12)
         .width(Length::Fill);
