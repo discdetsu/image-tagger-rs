@@ -183,6 +183,16 @@ impl TaggerState {
                 self.contrast = value;
                 self.refresh_image();
             }
+            Message::CopyAccession(accession) => {
+                return iced::clipboard::write(accession.clone())
+                    .map(move |()| Message::AccessionCopied(accession.clone()));
+            }
+            Message::AccessionCopied(accession) => {
+                self.set_status(
+                    format!("Copied accession {} to clipboard", accession),
+                    BannerKind::Info,
+                );
+            }
         }
         Task::none()
     }
@@ -345,9 +355,17 @@ impl TaggerState {
                     ))
                     .size(18)
                     .style(text_color(TEXT_MUTED)),
-                    text(format!("Accession: {}", case.accession))
-                        .size(18)
-                        .style(text_color(TEXT_PRIMARY)),
+                    row![
+                        text(format!("Accession: {}", case.accession))
+                            .size(18)
+                            .style(text_color(TEXT_PRIMARY)),
+                        button(text("Copy").size(12))
+                            .padding([4, 8])
+                            .on_press(Message::CopyAccession(case.accession.clone()))
+                            .style(secondary_button_style),
+                    ]
+                    .spacing(8)
+                    .align_y(Alignment::Center),
                     text(format!(
                         "Tagged: {}",
                         if case.confirm { "Yes" } else { "No" }
@@ -699,4 +717,6 @@ pub enum Message {
     DismissStatus,
     BrightnessChanged(f32),
     ContrastChanged(f32),
+    CopyAccession(String),
+    AccessionCopied(String),
 }
